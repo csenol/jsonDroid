@@ -1,0 +1,73 @@
+target/
+.idea*
+*.iml
+*.ipr
+.classpath*
+.project*
+.settings*
+.worksheet/
+.plugins.sbt
+
+
+*.class
+*.log
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+.ensime
+.ensime.bak
+.emacs_clean.el
+etc/pres_compiler.txt
+etc/_region_.tex
+etc/manual.ltx
+scratch
+
+test_projects/sbt-deps
+test_projects/anti-xml
+test_projects/rogue
+
+sublime*
+ensime.sublime*
+.ensime_port
+
+src/main/scala/org/ensime/server/Test.scala
+.ensime_lucene
+
