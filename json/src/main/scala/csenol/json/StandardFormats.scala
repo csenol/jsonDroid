@@ -1,7 +1,7 @@
 package csenol.json
 
 import scala.collection.mutable.ArrayBuffer
-import android.util.JsonToken
+import com.google.gson.stream.JsonToken
 
 trait StandardFormats {
 

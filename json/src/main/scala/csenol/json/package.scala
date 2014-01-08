@@ -3,8 +3,8 @@ package csenol
 import scala.util.Try
 
 package object json {
-  type JsonReader = android.util.JsonReader
-  type JsonWriter = android.util.JsonWriter
+  type JsonReader = com.google.gson.stream.JsonReader
+  type JsonWriter = com.google.gson.stream.JsonWriter
 
   implicit class JsonWriterWrapper(val jwriter: JsonWriter) extends AnyVal {
     def write[T: JsonWriterT](name: String, t: T): JsonWriter = {

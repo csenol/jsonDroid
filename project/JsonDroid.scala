@@ -25,7 +25,7 @@ object BuildSettings {
     shellPrompt := ShellPrompt.buildShellPrompt,
     mappings in (Compile, packageBin) ~= filter,
     mappings in (Compile, packageSrc) ~= filter,
-    mappings in (Compile, packageDoc) ~= filter)   ++ Format.settings
+    mappings in (Compile, packageDoc) ~= filter)//   ++ Format.settings
 }
 
 object Format {
@@ -89,9 +89,8 @@ object Resolvers {
 }
 
 object Dependencies {
-
-  val log4jVersion = "2.0-beta9"
-  val log4j = Seq("org.apache.logging.log4j" % "log4j-api" % log4jVersion, "org.apache.logging.log4j" % "log4j-core" % log4jVersion)
+  val gson = "com.google.code.gson" % "gson" % "2.2.4"
+  val scalaTest = "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
 }
 
 object JsonDroidBuild extends Build {
@@ -111,7 +110,7 @@ object JsonDroidBuild extends Build {
   lazy val json = Project(
     "JsonDroid-Json",
     file("json"),
-    settings = buildSettings)
+    settings = buildSettings ++ Seq( libraryDependencies ++= Seq(gson, scalaTest)))
 
   lazy val jsonmacros = Project(
     "JsonDroid-Json-Macros",

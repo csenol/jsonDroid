@@ -1,7 +1,7 @@
 jsonDroid
 =========
 
-A Scala Wrapper for android.util.Json*
+A Scala Wrapper for google-gson aiming Android
 
 Hihgly inspired by spray-json and reactivemongo macros
 
