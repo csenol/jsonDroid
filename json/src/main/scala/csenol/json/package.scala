@@ -15,18 +15,16 @@ package object json {
 
   implicit class JsonReaderWrapper(val jreader: JsonReader) extends AnyVal {
 
-    def getAs[T: JsonReaderT]: Option[T] = Try {
+    def getAsTry[T: JsonReaderT]: Try[T] = Try {
       implicitly[JsonReaderT[T]].wrapRead(jreader)
-    }.toOption
+    }
+
+    def getAs[T: JsonReaderT]: Option[T] = getAsTry[T].toOption
 
     def hasNext = jreader.hasNext
     def nextName = jreader.nextName
     def beginObject = jreader.beginObject
     def endObject = jreader.endObject
   }
-
-}
-
-package json {
 
 }
