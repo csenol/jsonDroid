@@ -27,6 +27,13 @@ trait JsonWriterT[T] {
     out.endObject
     o
   }
+
+  private[json] def wrapWrite(t: T, out: JsonWriter): JsonWriter = {
+    out.beginObject
+    val o = write(t, out)
+    out.endObject
+    o
+  }
 }
 
 trait JsonFormat[T] extends JsonReaderT[T] with JsonWriterT[T]

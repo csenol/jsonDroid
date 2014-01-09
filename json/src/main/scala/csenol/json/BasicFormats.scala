@@ -8,6 +8,9 @@ trait BasicFormats {
       out.name(name)
       write(t, out)
     }
+    abstract override def wrapWrite(t: T, out: JsonWriter) = {
+      write(t, out)
+    }
   }
 
   implicit object stringFormat extends JsonFormat[String] with NoWrapped[String] {

@@ -20,22 +20,30 @@ trait CollectionFormats {
       out.endArray()
       y
     }
+    
+    override def wrapWrite(t: Vector[T], out: JsonWriter): JsonWriter = {
+      out.beginArray()
+      val o = write(t, out)
+      out.endArray()
+      o
+    }
 
     def read(in: JsonReader): Vector[T] = {
       val tReader: JsonReaderT[T] = implicitly[JsonReaderT[T]]
       var buffer = Vector.empty[T]
       while (in.hasNext) {
-        buffer = buffer :+ tReader.read(in)
+        buffer = buffer :+ tReader.wrapRead(in)
       }
       buffer
     }
 
     def write(t: Vector[T], out: JsonWriter) = {
-      var i = t.size - 1
+      var i = 0
+      val limit = t.size
       val tWriter = implicitly[JsonWriterT[T]]
-      while (i >= 0) {
-        tWriter.write(t(i), out)
-        i -= 1
+      while (i < limit) {
+        tWriter.wrapWrite(t(i), out)
+        i += 1
       }
       out
     }

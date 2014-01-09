@@ -11,6 +11,11 @@ package object json {
       val imp = implicitly[JsonWriterT[T]]
       imp.wrapWrite(name, t, jwriter)
     }
+
+    def write[T: JsonWriterT](t: T): JsonWriter = {
+      val imp = implicitly[JsonWriterT[T]]
+      imp.wrapWrite(t, jwriter)
+    }
   }
 
   implicit class JsonReaderWrapper(val jreader: JsonReader) extends AnyVal {
