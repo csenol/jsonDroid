@@ -101,23 +101,15 @@ object JsonDroidBuild extends Build {
 
   lazy val jsonDroid =
     Project(
-      "JsonDroid-Root",
+      "jsonDroid-root",
       file("."),
       settings = buildSettings ++ (publishArtifact := false) ).
     settings(UnidocPlugin.unidocSettings: _*).
-    aggregate(json, jsonmacros)
+    aggregate(json)
 
   lazy val json = Project(
-    "JsonDroid-Json",
+    "jsonDroid-json",
     file("json"),
     settings = buildSettings ++ Seq( libraryDependencies ++= Seq(gson, scalaTest)))
-
-  lazy val jsonmacros = Project(
-    "JsonDroid-Json-Macros",
-    file("macros"),
-    settings = buildSettings ++ Seq(
-      libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _)
-    )).
-    dependsOn (json)
 }
 
