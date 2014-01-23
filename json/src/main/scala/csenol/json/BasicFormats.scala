@@ -3,12 +3,8 @@ package csenol.json
 trait BasicFormats {
 
   trait NoWrapped[T] extends JsonFormat[T] {
-    abstract override def wrapRead(in: JsonReader) = read(in)
-    abstract override def wrapWrite(name: String, t: T, out: JsonWriter) = {
-      out.name(name)
-      write(t, out)
-    }
-    abstract override def wrapWrite(t: T, out: JsonWriter) = {
+    abstract override def rootRead(in: JsonReader) = read(in)
+    abstract override def rootWrite(t: T, out: JsonWriter) = {
       write(t, out)
     }
   }

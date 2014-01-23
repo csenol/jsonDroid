@@ -6,22 +6,14 @@ trait CollectionFormats {
 
   implicit def vectorFormat[T: JsonFormat] = new JsonFormat[Vector[T]] {
 
-    override def wrapRead(in: JsonReader): Vector[T] = {
+    override def rootRead(in: JsonReader): Vector[T] = {
       in.beginArray
       val t = read(in)
       in.endArray
       t
     }
 
-    override def wrapWrite(name: String, t: Vector[T], out: JsonWriter) = {
-      out.name(name)
-      out.beginArray()
-      val y = write(t, out)
-      out.endArray()
-      y
-    }
-    
-    override def wrapWrite(t: Vector[T], out: JsonWriter): JsonWriter = {
+    override def rootWrite(t: Vector[T], out: JsonWriter): JsonWriter = {
       out.beginArray()
       val o = write(t, out)
       out.endArray()
@@ -32,7 +24,7 @@ trait CollectionFormats {
       val tReader: JsonReaderT[T] = implicitly[JsonReaderT[T]]
       var buffer = Vector.empty[T]
       while (in.hasNext) {
-        buffer = buffer :+ tReader.wrapRead(in)
+        buffer = buffer :+ tReader.rootRead(in)
       }
       buffer
     }
@@ -42,7 +34,7 @@ trait CollectionFormats {
       val limit = t.size
       val tWriter = implicitly[JsonWriterT[T]]
       while (i < limit) {
-        tWriter.wrapWrite(t(i), out)
+        tWriter.rootWrite(t(i), out)
         i += 1
       }
       out
@@ -67,19 +59,13 @@ trait CollectionFormats {
   implicit def setFormat[T: JsonFormat] = viaVector[Set[T], T](list => Set(list: _*))
 
   def viaVector[I <: Iterable[T], T: JsonFormat](f: Vector[T] => I): JsonFormat[I] = new JsonFormat[I] {
-    override def wrapRead(in: JsonReader): I = {
+    override def rootRead(in: JsonReader): I = {
       in.beginArray
       val t = read(in)
       in.endArray
       t
     }
-    override def wrapWrite(name: String, t: I, out: JsonWriter) = {
-      out.name(name)
-      out.beginArray()
-      val y = write(t, out)
-      out.endArray()
-      y
-    }
+
     def write(iterable: I, out: JsonWriter) = vectorFormat[T].write(iterable.toVector, out)
     def read(in: JsonReader) = f(vectorFormat[T].read(in))
   }

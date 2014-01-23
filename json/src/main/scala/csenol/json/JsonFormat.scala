@@ -7,7 +7,7 @@ trait JsonReaderT[T] {
 
   def read(in: JsonReader): T
 
-  private[json] def wrapRead(in: JsonReader): T = {
+  private[json] def rootRead(in: JsonReader): T = {
     in.beginObject
     val t = read(in)
     in.endObject
@@ -20,15 +20,12 @@ trait JsonWriterT[T] {
 
   def write(t: T, out: JsonWriter): JsonWriter
 
-  private[json] def wrapWrite(name: String, t: T, out: JsonWriter): JsonWriter = {
+  private[json] def namedWrite(name: String, t: T, out: JsonWriter): JsonWriter = {
     out.name(name)
-    out.beginObject
-    val o = write(t, out)
-    out.endObject
-    o
+    rootWrite(t, out)
   }
 
-  private[json] def wrapWrite(t: T, out: JsonWriter): JsonWriter = {
+  private[json] def rootWrite(t: T, out: JsonWriter): JsonWriter = {
     out.beginObject
     val o = write(t, out)
     out.endObject

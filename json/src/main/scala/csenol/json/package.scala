@@ -9,19 +9,19 @@ package object json {
   implicit class JsonWriterWrapper(val jwriter: JsonWriter) extends AnyVal {
     def write[T: JsonWriterT](name: String, t: T): JsonWriter = {
       val imp = implicitly[JsonWriterT[T]]
-      imp.wrapWrite(name, t, jwriter)
+      imp.namedWrite(name, t, jwriter)
     }
 
     def write[T: JsonWriterT](t: T): JsonWriter = {
       val imp = implicitly[JsonWriterT[T]]
-      imp.wrapWrite(t, jwriter)
+      imp.rootWrite(t, jwriter)
     }
   }
 
   implicit class JsonReaderWrapper(val jreader: JsonReader) extends AnyVal {
 
     def getAsTry[T: JsonReaderT]: Try[T] = Try {
-      implicitly[JsonReaderT[T]].wrapRead(jreader)
+      implicitly[JsonReaderT[T]].rootRead(jreader)
     }
 
     def getAs[T: JsonReaderT]: Option[T] = getAsTry[T].toOption
