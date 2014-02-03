@@ -105,11 +105,16 @@ object JsonDroidBuild extends Build {
       file("."),
       settings = buildSettings ++ (publishArtifact := false) ).
     settings(UnidocPlugin.unidocSettings: _*).
-    aggregate(json)
+    aggregate(json).
+    settings( ScoverageSbtPlugin.instrumentSettings: _*).
+    settings( CoverallsPlugin.coverallsSettings: _*) 
 
   lazy val json = Project(
     "jsonDroid-json",
     file("json"),
-    settings = buildSettings ++ Seq( libraryDependencies ++= Seq(gson, scalaTest)))
+    settings = buildSettings ++ Seq( libraryDependencies ++= Seq(gson, scalaTest))).
+    settings( ScoverageSbtPlugin.instrumentSettings: _*).
+    settings( CoverallsPlugin.coverallsSettings: _*)
+  
 }
 

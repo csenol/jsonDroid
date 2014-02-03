@@ -26,10 +26,6 @@ package object json {
 
     def getAs[T: JsonReaderT]: Option[T] = getAsTry[T].toOption
 
-    def hasNext = jreader.hasNext
-    def nextName = jreader.nextName
-    def beginObject = jreader.beginObject
-    def endObject = jreader.endObject
   }
 
 }
