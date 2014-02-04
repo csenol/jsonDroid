@@ -1,7 +1,7 @@
-package csenol.json.test
+package com.vngrs.json.test
 
-import csenol.json._
-import csenol.json.DefaultJsonProtocols._
+import com.vngrs.json._
+import com.vngrs.json.DefaultJsonProtocols._
 
 import collection.mutable.Stack
 import org.scalatest._

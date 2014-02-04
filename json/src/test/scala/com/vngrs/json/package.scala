@@ -1,7 +1,7 @@
-package csenol.json
+package com.vngrs.json
 
-import csenol.json._
-import csenol.json.DefaultJsonProtocols._
+import com.vngrs.json._
+import com.vngrs.json.DefaultJsonProtocols._
 
 
 package object test {

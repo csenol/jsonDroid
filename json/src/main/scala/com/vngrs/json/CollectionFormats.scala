@@ -1,4 +1,4 @@
-package csenol.json
+package com.vngrs.json
 
 import scala.collection.immutable.Vector
 

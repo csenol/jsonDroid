@@ -13,8 +13,8 @@ Highly inspired by spray-json and reactivemongo macros
 Almost same as in spray-json, import relevant elements.
 
 ```scala
-import csenol.json._
-import csenol.json.DefaultJsonProtocols._
+import com.vngrs.json._
+import com.vngrs.json.DefaultJsonProtocols._
 ```
 These will import to implicit classes ```JsonWriterWrapper``` and ```JsonReaderWrapper``` into scope, so that 
 you can use ```JsonReader``` with ```getAs[T]: Option[T]``` or ```getAsTry[T]: Try[T]``` methods and ```JsonWriter``` with ```write(t: T): JsonWriter``` method

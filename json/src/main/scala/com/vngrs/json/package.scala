@@ -1,4 +1,4 @@
-package csenol
+package com.vngrs
 
 import scala.util.Try
 
