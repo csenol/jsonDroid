@@ -50,14 +50,6 @@ trait CollectionFormats {
   implicit def immLinearSeqFormat[T: JsonFormat] = viaVector[imm.LinearSeq[T], T](list => imm.LinearSeq(list: _*))
   implicit def immSetFormat[T: JsonFormat] = viaVector[imm.Set[T], T](list => imm.Set(list: _*))
 
-  import collection._
-
-  implicit def iterableFormat[T: JsonFormat] = viaVector[Iterable[T], T](list => Iterable(list: _*))
-  implicit def seqFormat[T: JsonFormat] = viaVector[Seq[T], T](list => Seq(list: _*))
-  implicit def indexedSeqFormat[T: JsonFormat] = viaVector[IndexedSeq[T], T](list => IndexedSeq(list: _*))
-  implicit def linearSeqFormat[T: JsonFormat] = viaVector[LinearSeq[T], T](list => LinearSeq(list: _*))
-  implicit def setFormat[T: JsonFormat] = viaVector[Set[T], T](list => Set(list: _*))
-
   def viaVector[I <: Iterable[T], T: JsonFormat](f: Vector[T] => I): JsonFormat[I] = new JsonFormat[I] {
     override def rootRead(in: JsonReader): I = {
       in.beginArray
