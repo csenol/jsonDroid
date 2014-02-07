@@ -12,7 +12,7 @@ object BuildSettings {
   }
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
-    organization := "csenol.jsondroid",
+    organization := "com.vngrs.jsondroid",
     version := buildVersion,
     scalaVersion := "2.10.3",
     crossScalaVersions := Seq("2.10.3"),
@@ -25,7 +25,7 @@ object BuildSettings {
     shellPrompt := ShellPrompt.buildShellPrompt,
     mappings in (Compile, packageBin) ~= filter,
     mappings in (Compile, packageSrc) ~= filter,
-    mappings in (Compile, packageDoc) ~= filter)//   ++ Format.settings
+    mappings in (Compile, packageDoc) ~= filter) ++ Publish.settings//   ++ Format.settings
 }
 
 object Format {
@@ -54,6 +54,36 @@ object Format {
       setPreference(SpaceInsideBrackets, false).
       setPreference(SpacesWithinPatternBinders, true)
   }
+}
+
+
+object Publish {
+  def targetRepository: Project.Initialize[Option[sbt.Resolver]] = version { (version: String) =>
+    val nexus = "https://oss.sonatype.org/"
+    if (version.trim.endsWith("SNAPSHOT"))
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+   }
+  lazy val settings = Seq(
+    publishMavenStyle := true,
+    publishTo <<= targetRepository,
+    publishArtifact in Test := false,
+    pomIncludeRepository := { _ => false },
+    licenses := Seq("LGPLv3" -> url("http://www.gnu.org/licenses/lgpl-3.0.html")),
+    homepage := Some(url("https://github.com/vngrs/jsonDroid")),
+    pomExtra := (
+      <scm>
+        <url>git://github.com/vngrs/jsonDroid.git</url>
+        <connection>scm:git://github.com/vngrs/jsonDroid.git</connection>
+      </scm>
+      <developers>
+        <developer>
+          <id>csenol</id>
+          <name>Cagdas Senol</name>
+          <url>>https://github.com/csenol</url>
+        </developer>
+      </developers>))
 }
 
 // Shell prompt which show the current project,
@@ -101,7 +131,7 @@ object JsonDroidBuild extends Build {
 
   lazy val jsonDroid =
     Project(
-      "jsonDroid-root",
+      "root",
       file("."),
       settings = buildSettings ++ (publishArtifact := false) ).
     settings(UnidocPlugin.unidocSettings: _*).
@@ -110,7 +140,7 @@ object JsonDroidBuild extends Build {
     settings( CoverallsPlugin.coverallsSettings: _*) 
 
   lazy val json = Project(
-    "jsonDroid-json",
+    "json",
     file("json"),
     settings = buildSettings ++ Seq( libraryDependencies ++= Seq(gson, scalaTest))).
     settings( ScoverageSbtPlugin.instrumentSettings: _*).
