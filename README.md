@@ -106,8 +106,9 @@ Use JsonReader which is provided by google-gson to convet json-input to an Scala
 ## Shortcomings
   Implementing type classes is cumbersome. I will try to write some implicit macros for this
 
+## LICENSE
+ This project is licensed under LGPLv3
+
 ## Credits
 
 ## Contributors
-
-
