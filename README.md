@@ -8,6 +8,20 @@ Highly inspired by spray-json and reactivemongo macros
 
 ## Installation
 
+For releaes
+```scala
+libraryDependencies += "com.vngrs.jsondroid" %% "json" % "0.1"
+```
+
+For snapshots
+
+```scala
+resolvers += "Sonatype Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
+
+libraryDependencies += "com.vngrs.jsondroid" %% "json" % "0.1-SNAPSHOT"
+```
+
+
 ## Usage
  
 Almost same as in spray-json, import relevant elements.
